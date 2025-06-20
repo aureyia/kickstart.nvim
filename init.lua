@@ -103,6 +103,10 @@ vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
 
 vim.o.guicursor = ''
 
@@ -223,7 +227,8 @@ vim.keymap.set('n', '<leader>gs', '<cmd>TSToolsGoToSourceDefinition<CR>', {
   buffer = bufnr,
   desc = 'gs: Go to Source Definition in TypeScript',
 })
-
+vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle position=right<CR>', { desc = 'Toggle Neo-tree' })
+vim.keymap.set('n', '<leader>fe', '<cmd>Neotree focus<CR>', { desc = 'Focus Neo-tree' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -369,7 +374,21 @@ require('lazy').setup({
       },
     },
   },
-
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    lazy = false,
+    ---@module "neo-tree"
+    ---@type neotree.Config?
+    opts = {
+      -- fill any relevant options here
+    },
+  },
   -- NOTE: Plugins can specify dependencies.
   --
   -- The dependencies are proper plugin specifications as well - anything
