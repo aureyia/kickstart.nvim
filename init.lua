@@ -229,6 +229,25 @@ vim.keymap.set('n', '<leader>gs', '<cmd>TSToolsGoToSourceDefinition<CR>', {
 })
 vim.keymap.set('n', '<leader>e', '<cmd>Neotree toggle position=right<CR>', { desc = 'Toggle Neo-tree' })
 vim.keymap.set('n', '<leader>fe', '<cmd>Neotree focus<CR>', { desc = 'Focus Neo-tree' })
+
+-- Moving blocks of highlighted text
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+
+-- paste over and keep original register
+vim.keymap.set('x', '<leader>p', '"_dP')
+
+-- yank to clipboard
+vim.keymap.set('n', '<leader>y', '"+y')
+vim.keymap.set('v', '<leader>y', '"+y')
+vim.keymap.set('n', '<leader>Y', '"+Y')
+
+-- send to void
+vim.keymap.set('n', '<leader>d', '"_d')
+vim.keymap.set('v', '<leader>d', '"_d')
+
+vim.keymap.set('n', 'Q', '<nop>')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -724,7 +743,9 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-
+        zls = {
+          cmd = { '/usr/local/bin/zls' },
+        },
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -776,7 +797,7 @@ require('lazy').setup({
       }
     end,
   },
-
+  { 'shaunsingh/nord.nvim' },
   { -- Color Scheme
     'pmizio/typescript-tools.nvim',
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
@@ -947,12 +968,14 @@ require('lazy').setup({
       require('rose-pine').setup {
         styles = {
           italic = false,
+          transparency = true,
         },
         highlight_groups = {
           Comment = { italic = false },
         },
       }
       vim.cmd.colorscheme 'rose-pine'
+      vim.opt.pumblend = 0
     end,
   },
   -- Highlight todo, notes, etc in comments
